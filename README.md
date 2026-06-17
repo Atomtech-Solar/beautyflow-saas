@@ -1,264 +1,74 @@
-# Agenda Inteligente — Plataforma SaaS Multi-Tenant para Negócios de Beleza
+# BeautyFlow SaaS
 
-Plataforma SaaS desenvolvida para barbearias, salões de beleza e estúdios de estética. O sistema opera em modelo **multi-tenant**, permitindo que múltiplas empresas utilizem ambientes totalmente isolados dentro da mesma infraestrutura, mantendo independência operacional, segurança e escalabilidade.
+Plataforma SaaS multi-tenant para gestão de barbearias, salões de beleza e estúdios de estética.
 
-> Código-fonte privado.
->
-> Este repositório tem como objetivo apresentar a arquitetura, funcionalidades e decisões técnicas do projeto.
+O sistema permite que múltiplas empresas operem em ambientes totalmente isolados, com controle de agenda, financeiro, estoque, equipe e relacionamento com clientes.
 
----
+> Código-fonte privado. Este repositório apresenta a arquitetura e as principais funcionalidades da plataforma.
 
-# Destaques do Projeto
+## Principais Recursos
 
-* Arquitetura SaaS Multi-Tenant
-* 4 níveis de acesso e permissão
-* Isolamento de dados via Row Level Security (RLS)
 * Agenda inteligente com prevenção de conflitos
-* Landing page automática para cada empresa
-* Controle financeiro integrado
-* Gestão de estoque
-* Controle de comissões
-* Módulo fiscal com Edge Functions
+* Multi-tenancy com isolamento via Row Level Security (RLS)
+* Gestão de serviços, profissionais e clientes
+* Controle financeiro e metas de faturamento
+* Gestão de estoque e comissões
+* Landing pages automáticas para cada empresa
 * Área exclusiva para clientes
-* Dashboard analítico com gráficos
-* Aproximadamente 73 migrations SQL versionadas
-* Arquitetura baseada em camada de serviços
-* Segurança Zero-Trust
+* Dashboard analítico e relatórios
+* Módulo fiscal baseado em Edge Functions
 
----
-
-# Visão Geral
-
-A plataforma funciona como um ecossistema white-label, onde cada empresa possui:
-
-* Dashboard próprio
-* Agenda independente
-* Equipe própria
-* Serviços personalizados
-* Landing page exclusiva
-* Clientes isolados
-* Dados protegidos por políticas de segurança
-
----
-
-# Hierarquia de Usuários
-
-| Perfil              | Responsabilidades                                              |
-| ------------------- | -------------------------------------------------------------- |
-| Owner (Super Admin) | Administração global da plataforma e gerenciamento de empresas |
-| Empresa (Tenant)    | Operação completa do próprio negócio                           |
-| Funcionários        | Gestão de agenda e atendimentos                                |
-| Clientes            | Agendamento online e acompanhamento de histórico               |
-
----
-
-# Principais Funcionalidades
-
-## Agenda Inteligente
-
-* Visualização por profissional
-* Controle automático de disponibilidade
-* Prevenção de conflitos de horário
-* Modos calendário e lista
-* Busca de clientes
-* Gestão de duração dos serviços
-
-## Gestão Operacional
-
-* Cadastro de serviços
-* Cadastro de profissionais
-* Controle de horários de funcionamento
-* Gestão de clientes
-
-## Financeiro
-
-* Controle de recebimentos
-* Registro de movimentações financeiras
-* Formas de pagamento
-* Metas de faturamento
-
-## Estoque
-
-* Cadastro de produtos
-* Movimentações de estoque
-* Controle de consumo
-* Conversão de pacotes
-
-## Comissões
-
-* Controle de pagamentos por profissional
-* Histórico de comissões
-* Relatórios de desempenho
-
-## Fiscal
-
-* Emissão de documentos fiscais
-* Cancelamento de documentos
-* Logs de auditoria
-* Processamento via Edge Functions
-
-## Comunicação Interna
-
-* Mural de avisos
-* Comentários
-* Menções entre colaboradores
-
-## Área do Cliente
-
-* Agendamento online
-* Histórico de atendimentos
-* Perfil do cliente
-* Acompanhamento de serviços
-
----
-
-# Arquitetura
-
-## Estrutura de Permissões
-
-```text
-Owner
-  │
-  ├── Empresa A
-  │      ├── Funcionários
-  │      └── Clientes
-  │
-  ├── Empresa B
-  │      ├── Funcionários
-  │      └── Clientes
-  │
-  └── Empresa N
-```
-
-## Fluxo da Aplicação
+## Arquitetura
 
 ```text
 React + TypeScript
-          │
-          ▼
-     Service Layer
-          │
-          ▼
-    Supabase Auth
-          │
-          ▼
+        ↓
+   Service Layer
+        ↓
+     Supabase
+        ↓
  PostgreSQL + RLS
-          │
-          ▼
- Edge Functions
 ```
 
-### Princípios Arquiteturais
+### Destaques Técnicos
 
-#### Camada de Serviços
+* Arquitetura SaaS Multi-Tenant
+* 4 níveis de acesso (Owner, Empresa, Funcionário e Cliente)
+* Aproximadamente 73 migrations SQL
+* Segurança baseada em políticas RLS
+* Frontend desacoplado através de camada de serviços
+* Abordagem Zero-Trust para controle de permissões
 
-Toda comunicação com o backend é centralizada em uma camada de serviços dedicada. Os componentes da interface nunca acessam dados diretamente.
+## Stack
 
-#### Multi-Tenant por Design
+**Frontend**
 
-O isolamento entre empresas é garantido pelo banco de dados através de políticas Row Level Security (RLS), evitando qualquer vazamento de dados entre tenants.
-
-#### Segurança Zero-Trust
-
-O frontend realiza apenas validações de experiência do usuário. Todas as permissões e regras de acesso são validadas no backend, que atua como autoridade final.
-
----
-
-# Stack Tecnológica
-
-## Frontend
-
-* React 18
+* React
 * TypeScript
-* Vite + SWC
-* React Router DOM
-* TanStack Query
-* React Hook Form
-* Zod
 * Tailwind CSS
-* shadcn/ui
-* Radix UI
-* Recharts
-* date-fns
-* jsPDF
-* xlsx
-* Sonner
-* next-themes
+* TanStack Query
+* React Hook Form + Zod
 
-## Backend e Infraestrutura
+**Backend**
 
 * Supabase
 * PostgreSQL
-* Supabase Auth
-* Supabase Storage
-* Row Level Security (RLS)
-* Supabase Edge Functions (Deno)
+* Edge Functions
 
-## Qualidade e Ferramentas
+## Demonstração
 
-* Vitest
-* Testing Library
-* ESLint
-* TypeScript ESLint
-* pnpm
+### Dashboard
 
----
+*Screenshot*
 
-# Métricas do Projeto
+### Agenda Inteligente
 
-| Métrica                 | Valor        |
-| ----------------------- | ------------ |
-| Níveis de acesso        | 4            |
-| Arquitetura             | Multi-Tenant |
-| Migrations SQL          | ~73          |
-| Módulos principais      | 10+          |
-| Sistema de autenticação | Completo     |
-| Landing Pages           | Automáticas  |
-| Dashboard Analítico     | Sim          |
-| Controle Fiscal         | Sim          |
-| Gestão Financeira       | Sim          |
-| Controle de Estoque     | Sim          |
+*Screenshot*
 
----
+### Financeiro
 
-# Demonstração
+*Screenshot*
 
-## Dashboard
+### Área do Cliente
 
-*Adicionar screenshot*
-
-## Agenda Inteligente
-
-*Adicionar screenshot*
-
-## Gestão Financeira
-
-*Adicionar screenshot*
-
-## Área do Cliente
-
-*Adicionar screenshot*
-
-## Fluxo Completo
-
-*Adicionar GIF ou vídeo demonstrativo*
-
----
-
-# Desafios Técnicos Resolvidos
-
-* Isolamento seguro de dados entre empresas
-* Controle granular de permissões
-* Prevenção de conflitos de agendamento
-* Escalabilidade para múltiplos tenants
-* Centralização de regras de negócio
-* Segurança baseada em políticas de banco de dados
-* Integração entre módulos financeiros, operacionais e fiscais
-
----
-
-# Objetivo do Projeto
-
-Este projeto foi desenvolvido para aplicar conceitos avançados de arquitetura SaaS, multi-tenancy, segurança baseada em políticas, escalabilidade de aplicações web e organização de sistemas empresariais modernos.
-
-Representa uma solução completa para gestão de negócios de beleza, combinando experiência do usuário, segurança e escalabilidade em uma única plataforma.
+*Screenshot*
