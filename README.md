@@ -86,4 +86,4 @@ Portal de autoatendimento onde clientes podem realizar agendamentos online, cons
 
 A plataforma adota uma arquitetura **SaaS multi-tenant** com isolamento de dados garantido no banco via Row Level Security. Uma camada de serviços desacopla a interface do backend (Supabase + PostgreSQL), enquanto o modelo de segurança Zero-Trust assegura que todas as decisões de permissão ocorram no servidor.
 
-[Ver documentação técnica completa](docs/arquitetura.md)
+[Ver documentação técnica completa](https://github.com/Atomtech-Solar/beautyflow-saas/blob/main/arquitetura.md)
