@@ -37,5 +37,5 @@ Página pública gerada automaticamente para cada empresa cadastrada na platafor
 Portal de autoatendimento onde clientes podem realizar agendamentos online, consultar histórico de atendimentos e gerenciar suas informações, reduzindo a necessidade de contato manual com a empresa.
 
 <p align="center">
-  <img src="https://i.ibb.co/8FsJrv9/cliente-auren.png" width="800">
+  <img src="https://i.ibb.co/8FsJrv9/cliente-auren.png" width="400">
 </p>
